@@ -1,4 +1,9 @@
 
+/**
+ * Class to represent an answer in the MultiPass application.
+ * 
+ * @author John Garrison
+ */
 public class Answer
 {
 	
@@ -7,7 +12,7 @@ public class Answer
 	 * 0 : Incorrect
 	 * 1 : Correct
 	 */
-	public char correct;
+	private char correct;
 	
 	/**
 	 * The answer associated with this Answer.
@@ -33,6 +38,16 @@ public class Answer
 	{
 		this.correct = correct;
 		this.answer = answer;
+	}
+	
+	/**
+	 * Tells whether this answer is correct.
+	 * 
+	 * @return	Whether this answer is correct.
+	 */
+	public boolean IsCorrect()
+	{
+		return correct == 1;
 	}
 	
 }
