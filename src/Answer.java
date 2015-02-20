@@ -15,18 +15,28 @@ public class Answer
 	private char correct;
 	
 	/**
+	 * The setter for the correct field.
+	 * 0 : Incorrect
+	 * 1 : Correct
+	 * 
+	 * @param correct	The value to set correct to.
+	 */
+	public void SetCorrect(char correct)
+	{
+		if(correct == '0' || correct == '1')
+		{
+			this.correct = correct;
+		}
+		else
+		{
+			System.out.println("Correct can only be set to 0 (Incorrect) or 1 (Correct).");
+		}
+	}
+	
+	/**
 	 * The answer associated with this Answer.
 	 */
 	public String answer;
-	
-	/**
-	 * Empty Constructor.
-	 */
-	public Answer()
-	{
-		correct = '0';
-		answer = "";
-	}
 	
 	/**
 	 * Constructor.
