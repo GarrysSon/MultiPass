@@ -31,6 +31,16 @@ public class Answer
 	}
 	
 	/**
+	 * Tells whether this answer is correct.
+	 * 
+	 * @return	Whether this answer is correct.
+	 */
+	public boolean IsCorrect()
+	{
+		return correct == 1;
+	}
+	
+	/**
 	 * The answer associated with this Answer.
 	 */
 	public String answer;
@@ -45,16 +55,6 @@ public class Answer
 	{
 		this.correct = correct;
 		this.answer = answer;
-	}
-	
-	/**
-	 * Tells whether this answer is correct.
-	 * 
-	 * @return	Whether this answer is correct.
-	 */
-	public boolean IsCorrect()
-	{
-		return correct == 1;
 	}
 	
 }
