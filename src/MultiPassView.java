@@ -1,4 +1,5 @@
 
-public class MultiPassView {
-
+public class MultiPassView
+{
+	
 }
