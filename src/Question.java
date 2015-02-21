@@ -8,9 +8,14 @@ public class Question
 {
 	
 	/**
-	 * The number of answers for each question.
+	 * The current number of answers for this question.
 	 */
-	public final int NUM_OF_ANSWERS = 4;
+	private int numOfAnswers;
+	
+	/**
+	 * The max number of answers for each question.
+	 */
+	public final int MAX_ANSWERS = 4;
 	
 	/**
 	 * The question associated with this Question.
@@ -27,7 +32,7 @@ public class Question
 	 */
 	public Question()
 	{
-		answers = new Answer[NUM_OF_ANSWERS];
+		answers = new Answer[MAX_ANSWERS];
 		question = "";
 	}
 	
@@ -39,8 +44,31 @@ public class Question
 	 */
 	public Question(Answer[] answers, String question)
 	{
-		this.answers = answers;
+		numOfAnswers = 0;
+		
+		for(Answer answer : answers)
+		{
+			this.AddAnswer(answer);
+		}
+		
 		this.question = question;
+	}
+	
+	/**
+	 * Adds an answer to this question.
+	 * 
+	 * @param answer		The answer to add.
+	 */
+	public void AddAnswer(Answer answer)
+	{
+		if(numOfAnswers < MAX_ANSWERS)
+		{
+			this.answers[numOfAnswers++] = answer;
+		}
+		else
+		{
+			System.out.println("You are trying to add an answer to a question that already has 4! Stop it you jerk!");
+		}
 	}
 	
 }
