@@ -15,6 +15,11 @@ public class Answer
 	private char correct;
 	
 	/**
+	 * The answer associated with this Answer.
+	 */
+	public String answer;
+	
+	/**
 	 * Sets this answer to be correct.
 	 */
 	public void SetCorrect()
@@ -30,6 +35,26 @@ public class Answer
 		this.correct = 0;
 	}
 	
+	private char chosen = '0';
+	
+	/**
+	 * Sets this answer to be the chosen answer.
+	 */
+	public void SetChosen()
+	{
+		chosen = '1';
+	}
+	
+	/**
+	 * Tells whether this answer is the chosen answer.
+	 * 
+	 * @return Whether this answer is the chosen answer.
+	 */
+	public boolean IsChosen()
+	{
+		return chosen == 1;
+	}
+	
 	/**
 	 * Tells whether this answer is correct.
 	 * 
@@ -41,9 +66,13 @@ public class Answer
 	}
 	
 	/**
-	 * The answer associated with this Answer.
+	 * Empty constructor.
 	 */
-	public String answer;
+	public Answer()
+	{
+		correct = '0';
+		answer = "";
+	}
 	
 	/**
 	 * Constructor.
