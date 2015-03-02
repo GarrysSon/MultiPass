@@ -1,15 +1,13 @@
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.layout.*;
 import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.FileDialog;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Menu;
-import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Text;
 import java.util.ArrayList;
 
 public class MultiPassView
@@ -17,28 +15,16 @@ public class MultiPassView
 	/**
 	 * The current question.
 	 */
-	private Text question;
+	private Label question;
 	
 	/**
-	 * The button associated with answer number 1.
+	 * The buttons for MultiPass.
 	 */
-	private Button answer1;
+	private Button answerOne, answerTwo, answerThree, answerFour, submit;
 	
 	/**
-	 * The button associated with answer number 2.
+	 * The menu bar for MultiPass.
 	 */
-	private Button answer2;
-	
-	/**
-	 * The button associated with answer number 3.
-	 */
-	private Button answer3;
-	
-	/**
-	 * The button associated with answer number 4.
-	 */
-	private Button answer4;
-	
 	private Menu menuBar;
 	
 	/**
@@ -47,54 +33,7 @@ public class MultiPassView
 	public MultiPassView()
 	{
 		Display display = new Display();
-		Shell shell = new Shell(display);
-		shell.setLayout(new FillLayout());
-		shell.setText("MultiPass");
-		shell.setSize(250, 200);
-		
-		// Create the menu bar.
-		menuBar = new Menu(shell, SWT.BAR);
-		MenuItem fileHeader = new MenuItem(menuBar, SWT.CASCADE);
-		fileHeader.setText("&File");
-		
-		Menu fileMenu = new Menu(shell, SWT.DROP_DOWN);
-		
-		MenuItem open = new MenuItem(fileMenu, SWT.PUSH);
-		open.setText("&Open");
-		//TODO: Need to set up with controller.
-		open.addSelectionListener(new SelectionAdapter()
-		{
-			@Override
-            public void widgetSelected(SelectionEvent e)
-			{
-                System.exit(0);
-            }
-		});
-		
-		fileHeader.setMenu(fileMenu);
-		// End of menu bar.
-		
-		// Question.
-		question = new Text(shell, SWT.NONE);
-		
-		// Buttons.
-		Composite buttons = new Composite(shell, SWT.NONE);
-		buttons.setLayout(new FillLayout());
-		
-		answer1 = new Button(buttons, SWT.PUSH);
-		answer1.setText("Answer 1");
-		
-		answer2 = new Button(buttons, SWT.PUSH);
-		answer2.setText("Answer 2");
-		
-		answer3 = new Button(buttons, SWT.PUSH);
-		answer3.setText("Answer 3");
-		
-		answer4 = new Button(buttons, SWT.PUSH);
-		answer4.setText("Answer 4");
-		// End of buttons.
-		
-		shell.setMenuBar(menuBar);
+		Shell shell = CreateShell(display);
 		shell.open();
 		
 		// Run while the shell is open.
@@ -106,6 +45,86 @@ public class MultiPassView
 				display.sleep();
 			}
 		}
+	}
+	
+	/**
+	 * Creates the shell for MultiPass view.
+	 * 
+	 * @param display	The display associated with the shell.
+	 * @return			The shell for the MultiPass view.
+	 */
+	private Shell CreateShell(final Display display)
+	{
+		final Shell shell = new Shell(display);
+		shell.setText("MultiPass");
+		
+		GridLayout shellLayout = new GridLayout();
+		shellLayout.numColumns = 1;
+		shell.setLayout(shellLayout);
+		
+		// Question.
+		question = new Label(shell, SWT.NONE);
+		question.setText("This is the question?");
+		
+		// Buttons.
+		answerOne = MultiPassButton(shell, "A", 10, new GridData(GridData.FILL, GridData.CENTER, true, false));
+		
+		answerTwo = MultiPassButton(shell, "B", 10, new GridData(GridData.FILL, GridData.CENTER, true, false));
+		
+		answerThree = MultiPassButton(shell, "C", 10, new GridData(GridData.FILL, GridData.CENTER, true, false));
+		
+		answerFour = MultiPassButton(shell, "D", 10, new GridData(GridData.FILL, GridData.END, true, false));
+		
+		submit = MultiPassButton(shell, "Submit", 50, new GridData(GridData.END, GridData.END, true, false));
+		
+		shell.pack();
+		return shell;
+	}
+	
+	/**
+	 * Method to create a generic MultiPass button.
+	 * 
+	 * @param shell				The shell associated with this button.
+	 * @param buttonText		The text for this button.
+	 * @param horizontalIndent	The horizontal indent for this button.
+	 * @param layout			The GridData layout associated with this button.
+	 * 
+	 * @return					The newly created button.
+	 */
+	private Button MultiPassButton(Shell shell, String buttonText, int horizontalIndent, GridData layout)
+	{
+		// Create the button.
+		Button button = new Button(shell, SWT.PUSH);
+		button.setText(buttonText);
+		
+		// Set the buttons indent, layout, and selection listener.
+		layout.horizontalIndent = horizontalIndent;
+		button.setLayoutData(layout);
+		button.addSelectionListener(AnswerSelection(buttonText));
+		
+		return button;
+	}
+	
+	/**
+	 * Creates a SelectionAdapter for a MultiPass answer.
+	 * 
+	 * @param answer		The title of the selected button.
+	 * 
+	 * @return				The SelectionAdapter for the associated answer.
+	 */
+	private SelectionAdapter AnswerSelection(String answer)
+	{
+		// Print the button that was clicked. (This is not a real adapter)
+		SelectionAdapter adapter = new SelectionAdapter()
+		{
+			@Override
+			public void widgetSelected(SelectionEvent e)
+			{
+				System.out.println("Selected the " + answer + " button.");
+			}
+		};
+		
+		return adapter;
 	}
 	
 	/**
