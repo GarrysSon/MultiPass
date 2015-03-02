@@ -28,7 +28,7 @@ public class MultiPassController
 	 */
 	public void Run() throws IOException
 	{
-		model.ReadQuestions(view.GetFile());
-	    view.PrintQuestions(model.questions);
+		//model.ReadQuestions(view.GetFile());
+	    //view.PrintQuestions(model.questions);
 	}
 }
