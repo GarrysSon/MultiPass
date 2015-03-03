@@ -82,6 +82,16 @@ public class Question
 	}
 	
 	/**
+	 * Sets the question for this Question.
+	 * 
+	 * @param question	The question to for this Question.
+	 */
+	public void SetQuestion(String question)
+	{
+		this.question = question;
+	}
+	
+	/**
 	 * Gets all the answers for this Question.
 	 * 
 	 * @return		The array of Answers.

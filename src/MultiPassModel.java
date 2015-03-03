@@ -4,17 +4,37 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
-public class MultiPassModel
+public class MultiPassModel extends java.util.Observable
 {
+	/**
+	 * The index of the currently selected question.
+	 */
+	private int index;
+	
 	/**
 	 * The list of questions.
 	 */
-	ArrayList<Question> questions = new ArrayList<Question>();
+	public ArrayList<Question> questions;
+	
+	/**
+	 * The currently selected question.
+	 */
+	private Question currentQuestion;
+	
+	/**
+	 * Empty constructor.
+	 */
+	public MultiPassModel()
+	{
+		index = 0;
+		questions = new ArrayList<Question>();
+		currentQuestion = new Question();
+	}
 	
 	/**
 	 * Reads the questions from the file at the given path.
 	 * 
-	 * @param path			The location of the file from root.
+	 * @param path		The location of the file from root.
 	 * @throws IOException
 	 */
 	public void ReadQuestions(String path) throws IOException
@@ -29,7 +49,7 @@ public class MultiPassModel
 	    while((line = reader.readLine()) != null)
 	    {
 	    	tempQuest = new Question();
-	    	tempQuest.question = line;
+	    	tempQuest.SetQuestion(line);
 	        
 	        // Loop over the answers.
 	        for(int i = 0; i < 4; i++)
@@ -55,5 +75,25 @@ public class MultiPassModel
 	        questions.add(tempQuest);
 	        line = reader.readLine();
 	    }
+	    
+	    // Setting the initial question.
+	    NextQuestion();
+	}
+	
+	/**
+	 * Sets the current question to the next question in the list.
+	 */
+	public void NextQuestion()
+	{
+		if(index < questions.size())
+		{
+			currentQuestion = questions.get(index++);
+			setChanged();
+			notifyObservers(currentQuestion);
+		}
+		else
+		{
+			System.out.println("Finished the quiz!");
+		}
 	}
 }
