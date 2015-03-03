@@ -71,4 +71,54 @@ public class Question
 		}
 	}
 	
+	/**
+	 * Gets the question for this Question.
+	 * 
+	 * @return		This question.
+	 */
+	public String GetQuestion()
+	{
+		return question;
+	}
+	
+	/**
+	 * Gets answer A for this Question.
+	 * 
+	 * @return		The answer A.
+	 */
+	public String GetAnswerA()
+	{
+		return answers[0].answer;
+	}
+	
+	/**
+	 * Gets answer B for this Question.
+	 * 
+	 * @return		The answer B.
+	 */
+	public String GetAnswerB()
+	{
+		return answers[1].answer;
+	}
+	
+	/**
+	 * Gets answer C for this Question.
+	 * 
+	 * @return		The answer C.
+	 */
+	public String GetAnswerC()
+	{
+		return answers[2].answer;
+	}
+	
+	/**
+	 * Gets answer D for this Question.
+	 * 
+	 * @return		The answer D.
+	 */
+	public String GetAnswerD()
+	{
+		return answers[3].answer;
+	}
+	
 }
