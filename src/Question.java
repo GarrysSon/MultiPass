@@ -20,12 +20,12 @@ public class Question
 	/**
 	 * The question associated with this Question.
 	 */
-	public String question;
+	private String question;
 	
 	/**
 	 * The array of answers associated with this Question.
 	 */
-	public Answer[] answers;
+	private Answer[] answers;
 	
 	/**
 	 * Empty constructor.
@@ -79,6 +79,16 @@ public class Question
 	public String GetQuestion()
 	{
 		return question;
+	}
+	
+	/**
+	 * Gets all the answers for this Question.
+	 * 
+	 * @return		The array of Answers.
+	 */
+	public Answer[] GetAllAnswers()
+	{
+		return answers;
 	}
 	
 	/**
