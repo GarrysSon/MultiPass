@@ -34,11 +34,6 @@ public class MultiPassView implements java.util.Observer
 	public Label answerA, answerB, answerC, answerD;
 	
 	/**
-	 * The menu bar for MultiPass.
-	 */
-	public Menu menuBar;
-	
-	/**
 	 * The Shell associated with this view.
 	 */
 	private Shell shell;
@@ -148,6 +143,7 @@ public class MultiPassView implements java.util.Observer
 		
 		// Submit and Continue buttons.
 		submit = SubmitButton(submitComposite, "Submit", new GridData(GridData.END, GridData.END, false, false));
+		submit.setEnabled(false);
 		moveOn = SubmitButton(submitComposite, "Continue", new GridData(GridData.END, GridData.END, false, false));
 		moveOn.setEnabled(false);
 		/*	End of Submit and Continue  */
@@ -234,17 +230,25 @@ public class MultiPassView implements java.util.Observer
 	 */
 	public void ResetUI()
 	{
+		// Reset answer A button and text.
 		answerA.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_WHITE));
 		buttonA.setSelection(false);
+		buttonA.setEnabled(true);
 		
+		// Reset answer B button and text.
 		answerB.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_WHITE));
 		buttonB.setSelection(false);
+		buttonB.setEnabled(true);
 		
+		// Reset answer C button and text.
 		answerC.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_WHITE));
 		buttonC.setSelection(false);
+		buttonC.setEnabled(true);
 		
+		// Reset answer D button and text.
 		answerD.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_WHITE));
 		buttonD.setSelection(false);
+		buttonD.setEnabled(true);
 	}
 	
 	/**

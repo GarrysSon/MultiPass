@@ -63,6 +63,7 @@ public class MultiPassController implements SelectionListener
 			view.buttonB.setSelection(false);
 			view.buttonC.setSelection(false);
 			view.buttonD.setSelection(false);
+			view.submit.setEnabled(true);
 		}
 		else if(arg.getSource() == view.buttonB)
 		{
@@ -70,6 +71,7 @@ public class MultiPassController implements SelectionListener
 			view.buttonA.setSelection(false);
 			view.buttonC.setSelection(false);
 			view.buttonD.setSelection(false);
+			view.submit.setEnabled(true);
 		}
 		else if(arg.getSource() == view.buttonC)
 		{
@@ -77,6 +79,7 @@ public class MultiPassController implements SelectionListener
 			view.buttonA.setSelection(false);
 			view.buttonB.setSelection(false);
 			view.buttonD.setSelection(false);
+			view.submit.setEnabled(true);
 		}
 		else if(arg.getSource() == view.buttonD)
 		{
@@ -84,6 +87,7 @@ public class MultiPassController implements SelectionListener
 			view.buttonA.setSelection(false);
 			view.buttonB.setSelection(false);
 			view.buttonC.setSelection(false);
+			view.submit.setEnabled(true);
 		}
 		else if(arg.getSource() == view.submit)
 		{
@@ -105,6 +109,12 @@ public class MultiPassController implements SelectionListener
 				model.SetSelected(Choices.D);
 			}
 			
+			// Set the answer buttons to not be click-able.
+			view.buttonA.setEnabled(false);
+			view.buttonB.setEnabled(false);
+			view.buttonC.setEnabled(false);
+			view.buttonD.setEnabled(false);
+			
 			// Toggle the submit and continue buttons.
 			view.moveOn.setEnabled(true);
 			view.submit.setEnabled(false);
@@ -116,7 +126,6 @@ public class MultiPassController implements SelectionListener
 			
 			// Toggle the submit and continue buttons.
 			view.moveOn.setEnabled(false);
-			view.submit.setEnabled(true);
 			
 			// Reset the button states.
 			view.ResetUI();

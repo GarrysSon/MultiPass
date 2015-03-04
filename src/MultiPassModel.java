@@ -85,14 +85,17 @@ public class MultiPassModel extends java.util.Observable
 	 */
 	public void NextQuestion()
 	{
+		// Check to make sure there is another question.
 		if(index < questions.size())
 		{
+			// Set to the next question and notify the observer.
 			currentQuestion = questions.get(index++);
 			setChanged();
 			notifyObservers(currentQuestion);
 		}
 		else
 		{
+			// Notify the observer that the quiz is finished.
 			System.out.println("Finished the quiz!");
 		}
 	}
