@@ -5,8 +5,10 @@ import org.eclipse.swt.layout.*;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Shell;
 import java.util.Observable;
@@ -22,6 +24,16 @@ public class MultiPassView implements java.util.Observer
 	 * The current question.
 	 */
 	public Label question;
+	
+	/**
+	 * The composite for the question.
+	 */
+	private Composite questionComposite;
+	
+	/**
+	 * The grid data for the question.
+	 */
+	private GridData questionData;
 	
 	/**
 	 * The buttons for MultiPass.
@@ -44,13 +56,33 @@ public class MultiPassView implements java.util.Observer
 	private Display display;
 	
 	/**
+	 * The composite for the answers.
+	 */
+	private Composite answerComposite;
+	
+	/**
+	 * The grid data for the answers.
+	 */
+	private GridData answerData;
+	
+	/**
+	 * The composite for the submit/continue buttons.
+	 */
+	private Composite submitComposite;
+	
+	/**
+	 * The grid data for the submit/continue buttons.
+	 */
+	private GridData submitData;
+	
+	/**
 	 * Empty constructor.
 	 */
 	public MultiPassView()
 	{
 		// Creating the display.
 		display = new Display();
-		shell = CreateShell(display);
+		shell = CreateShell();
 	}
 	
 	/**
@@ -59,10 +91,10 @@ public class MultiPassView implements java.util.Observer
 	 * @param display		The display associated with the shell.
 	 * @return				The shell for the MultiPass view.
 	 */
-	private Shell CreateShell(final Display display)
+	private Shell CreateShell()
 	{
 		/*	Shell  */
-		final Shell shell = new Shell(display);
+		Shell shell = new Shell(display);
 		shell.setText("MultiPass");
 		shell.setMinimumSize(450, 275);
 		shell.setLocation(GetCenter(shell));
@@ -75,17 +107,27 @@ public class MultiPassView implements java.util.Observer
 		/*	End of Shell  */
 		
 		/*	Question.  */
-		question = new Label(shell, SWT.WRAP);
+		questionComposite = new Composite(shell, SWT.NONE);
+		question = new Label(questionComposite, SWT.WRAP);
+		
+		questionData = new GridData(SWT.NONE, SWT.NONE, false, false);
+		
+		questionComposite.setLayout(new GridLayout());
+		questionComposite.setLayoutData(questionData);
+		questionComposite.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_WHITE));
+		/*	End of Question  */
 		
 		/*	Answers  */
 		// Making the composite for the answers area.
-		Composite answerComposite = new Composite(shell, SWT.BORDER);
+		answerComposite = new Composite(shell, SWT.BORDER);
 		GridLayout answerLayout = new GridLayout();
 		answerLayout.numColumns = 3;
 		answerLayout.makeColumnsEqualWidth = false;
 		
+		answerData = new GridData(SWT.FILL, SWT.DEFAULT, true, true);
+		
 		answerComposite.setLayout(answerLayout);
-		answerComposite.setLayoutData(new GridData(SWT.FILL, SWT.DEFAULT, true, true));
+		answerComposite.setLayoutData(answerData);
 		answerComposite.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_WHITE));
 		// End answer area composite.
 		
@@ -128,13 +170,15 @@ public class MultiPassView implements java.util.Observer
 		
 		/*	Submit and Continue.  */
 		// Making the save/continue composite.
-		Composite submitComposite = new Composite(shell, SWT.NONE);
+		submitComposite = new Composite(shell, SWT.NONE);
 		GridLayout submitLayout = new GridLayout();
 		submitLayout.numColumns = 3;
 		submitLayout.makeColumnsEqualWidth = false;
 		
+		submitData = new GridData(SWT.FILL, SWT.DEFAULT, true, false);
+		
 		submitComposite.setLayout(submitLayout);
-		submitComposite.setLayoutData(new GridData(SWT.FILL, SWT.DEFAULT, true, false));
+		submitComposite.setLayoutData(submitData);
 		submitComposite.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_WHITE));
 		// End of save/continue composite.
 		
@@ -150,6 +194,27 @@ public class MultiPassView implements java.util.Observer
 		
 		shell.pack();
 		return shell;
+	}
+	
+	/**
+	 * Shows the results of the quiz.
+	 */
+	private void ShowResults()
+	{
+		// Hide the question.
+		questionData.exclude = !questionData.exclude;
+		questionComposite.setVisible(!questionData.exclude);
+		questionComposite.getParent().pack();
+		
+		// Hide the answers.
+		answerData.exclude = !answerData.exclude;
+        answerComposite.setVisible(!answerData.exclude);
+        answerComposite.getParent().pack();
+        
+        // Hide the submit/continue buttons.
+        submitData.exclude = !submitData.exclude;
+        submitComposite.setVisible(!submitData.exclude);
+        submitComposite.getParent().pack();
 	}
 	
 	/**
@@ -307,66 +372,74 @@ public class MultiPassView implements java.util.Observer
 	 */
 	public void update(Observable o, Object arg)
 	{
-		Question currentQuestion = (Question)arg;
 		
-		// Test if the user has selected an answer.
-		if(currentQuestion.chose)
+		if(arg != null)
 		{
-			// Set the chosen button as wrong.
-			switch(currentQuestion.choice)
+			Question currentQuestion = (Question)arg;
+			
+			// Test if the user has selected an answer.
+			if(currentQuestion.chose)
 			{
-				case A:
-					answerA.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_RED));
-					break;
-				case B:
-					answerB.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_RED));
-					break;
-				case C:
-					answerC.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_RED));
-					break;
-				case D:
-					answerD.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_RED));
-					break;
+				// Set the chosen button as wrong.
+				switch(currentQuestion.choice)
+				{
+					case A:
+						answerA.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_RED));
+						break;
+					case B:
+						answerB.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_RED));
+						break;
+					case C:
+						answerC.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_RED));
+						break;
+					case D:
+						answerD.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_RED));
+						break;
+				}
+				
+				Answer[] answers = currentQuestion.GetAllAnswers();
+				
+				// Set the correct answer as right.
+				if(answers[0].IsCorrect())
+				{
+					answerA.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_GREEN));
+				}
+				else if(answers[1].IsCorrect())
+				{
+					answerB.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_GREEN));
+				}
+				else if(answers[2].IsCorrect())
+				{
+					answerC.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_GREEN));
+				}
+				else if(answers[3].IsCorrect())
+				{
+					answerD.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_GREEN));
+				}
+			}
+			else
+			{
+				question.setText(currentQuestion.GetQuestion());
+				question.getParent().layout();
+				
+				answerA.setText(currentQuestion.GetAnswerA());
+				answerA.getParent().layout();
+				
+				answerB.setText(currentQuestion.GetAnswerB());
+				answerB.getParent().layout();
+				
+				answerC.setText(currentQuestion.GetAnswerC());
+				answerC.getParent().layout();
+				
+				answerD.setText(currentQuestion.GetAnswerD());
+				answerD.getParent().layout();
 			}
 			
-			Answer[] answers = currentQuestion.GetAllAnswers();
-			
-			// Set the correct answer as right.
-			if(answers[0].IsCorrect())
-			{
-				answerA.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_GREEN));
-			}
-			else if(answers[1].IsCorrect())
-			{
-				answerB.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_GREEN));
-			}
-			else if(answers[2].IsCorrect())
-			{
-				answerC.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_GREEN));
-			}
-			else if(answers[3].IsCorrect())
-			{
-				answerD.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_GREEN));
-			}
+			shell.pack();
 		}
 		else
 		{
-			question.setText(currentQuestion.GetQuestion());
-			question.getParent().layout();
-			
-			answerA.setText(currentQuestion.GetAnswerA());
-			answerA.getParent().layout();
-			
-			answerB.setText(currentQuestion.GetAnswerB());
-			answerB.getParent().layout();
-			
-			answerC.setText(currentQuestion.GetAnswerC());
-			answerC.getParent().layout();
-			
-			answerD.setText(currentQuestion.GetAnswerD());
-			answerD.getParent().layout();
+			ShowResults();
 		}
-		
-		shell.pack();
 	}
 }

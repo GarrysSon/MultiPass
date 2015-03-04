@@ -97,6 +97,8 @@ public class MultiPassModel extends java.util.Observable
 		{
 			// Notify the observer that the quiz is finished.
 			System.out.println("Finished the quiz!");
+			setChanged();
+			notifyObservers();
 		}
 	}
 	
