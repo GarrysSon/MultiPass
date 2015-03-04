@@ -1,4 +1,6 @@
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.*;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
@@ -24,7 +26,7 @@ public class MultiPassView implements java.util.Observer
 	/**
 	 * The buttons for MultiPass.
 	 */
-	public Button answerOne, answerTwo, answerThree, answerFour, submit;
+	public Button buttonA, buttonB, buttonC, buttonD, submit;
 	
 	/**
 	 * The answers for MultiPass.
@@ -64,44 +66,73 @@ public class MultiPassView implements java.util.Observer
 	 */
 	private Shell CreateShell(final Display display)
 	{
+		/*	Shell  */
 		final Shell shell = new Shell(display);
 		shell.setText("MultiPass");
+		shell.setMinimumSize(450, 250);
+		shell.setLocation(GetCenter(shell));
 		shell.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_WHITE));
 		
 		GridLayout shellLayout = new GridLayout();
 		shellLayout.numColumns = 1;
+		shellLayout.makeColumnsEqualWidth = true;
 		shell.setLayout(shellLayout);
+		/*	End of Shell  */
 		
-		// Question.
+		/*	Question.  */
 		question = new Label(shell, SWT.WRAP);
 		
-		// Buttons.
-		Composite compositeA = MultiPassComposite(shell);
-		answerOne = MultiPassButton(compositeA, "A", 10, new GridData(GridData.FILL, GridData.BEGINNING, true, false));
-		answerA = new Label(compositeA, SWT.NONE);
-		answerA.setLayoutData(new GridData(GridData.END, GridData.END, true, false));
+		/*	Answers  */
+		// Making the composite for the answers area.
+		Composite answerComposite = new Composite(shell, SWT.BORDER);
+		GridLayout answerLayout = new GridLayout();
+		answerLayout.numColumns = 3;
+		answerLayout.makeColumnsEqualWidth = false;
 		
-		////////////////////////////////////////////////////////////////////////
-		Composite compositeB = MultiPassComposite(shell);
-		answerTwo = MultiPassButton(compositeB, "B", 10, new GridData(GridData.FILL, GridData.BEGINNING, true, false));
-		answerB = new Label(compositeB, SWT.NONE);
-		answerB.setLayoutData(new GridData(GridData.END, GridData.END, true, false));
+		answerComposite.setLayout(answerLayout);
+		answerComposite.setLayoutData(new GridData(SWT.FILL, SWT.DEFAULT, true, true));
+		answerComposite.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_WHITE));
+		// End answer area composite.
 		
-		////////////////////////////////////////////////////////////////////////
-		Composite compositeC = MultiPassComposite(shell);
-		answerThree = MultiPassButton(compositeC, "C", 10, new GridData(GridData.FILL, GridData.BEGINNING, true, false));
-		answerC = new Label(compositeC, SWT.NONE);
-		answerC.setLayoutData(new GridData(GridData.END, GridData.END, true, false));
+		// Empty beginning label to center the buttons.
+		Label emptyBegin = CenterLabel(answerComposite);
 		
-		////////////////////////////////////////////////////////////////////////
-		Composite compositeD = MultiPassComposite(shell);
-		answerFour = MultiPassButton(compositeD, "D", 10, new GridData(GridData.FILL, GridData.BEGINNING, true, false));
-		answerD = new Label(compositeD, SWT.NONE);
-		answerD.setLayoutData(new GridData(GridData.END, GridData.END, true, false));
+		// Making the composite for all the buttons and answers.
+		Composite buttonsComposite = new Composite(answerComposite, SWT.NONE);
+		GridLayout buttonsLayout = new GridLayout();
+		buttonsLayout.numColumns = 2;
+		buttonsLayout.makeColumnsEqualWidth = true;
 		
-		////////////////////////////////////////////////////////////////////////
-		submit = MultiPassButton(shell, "Submit", 50, new GridData(GridData.END, GridData.END, true, false));
-		// End of Buttons.
+		buttonsComposite.setLayout(buttonsLayout);
+		buttonsComposite.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_WHITE));
+		// End button and answer composite.
+		
+		// Answer A.
+		buttonA = MultiPassButton(buttonsComposite, "A", 10, new GridData(SWT.DEFAULT, SWT.DEFAULT, false, true));
+		answerA = new Label(buttonsComposite, SWT.NONE);
+		answerA.setLayoutData(new GridData(SWT.DEFAULT, SWT.DEFAULT, false, false));
+		
+		// Answer B.
+		buttonB = MultiPassButton(buttonsComposite, "B", 10, new GridData(SWT.DEFAULT, SWT.DEFAULT, false, true));
+		answerB = new Label(buttonsComposite, SWT.NONE);
+		answerB.setLayoutData(new GridData(SWT.DEFAULT, SWT.DEFAULT, false, false));
+		
+		// Answer C.
+		buttonC = MultiPassButton(buttonsComposite, "C", 10, new GridData(SWT.DEFAULT, SWT.DEFAULT, false, true));
+		answerC = new Label(buttonsComposite, SWT.NONE);
+		answerC.setLayoutData(new GridData(SWT.DEFAULT, SWT.DEFAULT, false, false));
+		
+		// Answer D.
+		buttonD = MultiPassButton(buttonsComposite, "D", 10, new GridData(SWT.DEFAULT, SWT.DEFAULT, false, true));
+		answerD = new Label(buttonsComposite, SWT.NONE);
+		answerD.setLayoutData(new GridData(SWT.DEFAULT, SWT.DEFAULT, false, false));
+		
+		// Empty end label to center the buttons.
+		Label emptyEnd = CenterLabel(answerComposite);
+		/*	End of Answers.  */
+		
+		/*	Submit button.  */
+		submit = MultiPassButton(shell, "Submit", 50, new GridData(GridData.END, GridData.END, false, true));
 		
 		shell.pack();
 		return shell;
@@ -126,25 +157,16 @@ public class MultiPassView implements java.util.Observer
 	}
 	
 	/**
-	 * Creates a generic MultiPass composite.
+	 * Creates an empty label to help center widgets.
 	 * 
-	 * @param shell				The associated shell.
-	 * @return					The newly created composite.
+	 * @param composite			The composite of the label.
+	 * @return					The empty label.
 	 */
-	private Composite MultiPassComposite(Shell shell)
+	private Label CenterLabel(Composite composite)
 	{
-		// Create the temporary composite.
-		Composite composite = new Composite(shell, SWT.NONE);
-		
-		// Create the layout for the composite.
-		GridLayout compositeLayout = new GridLayout();
-		compositeLayout.numColumns = 2;
-		
-		// Set the values needed on the composite.
-		composite.setLayout(compositeLayout);
-		composite.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_WHITE));
-		
-		return composite;
+		Label label = new Label(composite, SWT.NONE);
+		label.setLayoutData(new GridData(SWT.FILL, SWT.DEFAULT, true, true));
+		return label;
 	}
 	
 	/**
@@ -160,7 +182,7 @@ public class MultiPassView implements java.util.Observer
 	private Button MultiPassButton(Composite composite, String buttonText, int horizontalIndent, GridData layout)
 	{
 		// Create the button.
-		Button button = new Button(composite, SWT.PUSH);
+		Button button = new Button(composite, SWT.TOGGLE);
 		button.setText(buttonText);
 		
 		// Set the buttons indent and layout.
@@ -180,10 +202,10 @@ public class MultiPassView implements java.util.Observer
 		this.controller = tempcontroller;
 		
 		// Add the controller to all buttons as the selection listener.
-		answerOne.addSelectionListener(controller);
-		answerTwo.addSelectionListener(controller);
-		answerThree.addSelectionListener(controller);
-		answerFour.addSelectionListener(controller);
+		buttonA.addSelectionListener(controller);
+		buttonB.addSelectionListener(controller);
+		buttonC.addSelectionListener(controller);
+		buttonD.addSelectionListener(controller);
 		submit.addSelectionListener(controller);
 	}
 	
@@ -198,6 +220,26 @@ public class MultiPassView implements java.util.Observer
 		dialog.setFilterExtensions(new String [] {"*.txt"});
 		return dialog.open();
 	}
+	
+	/**
+	 * Gets the location for the shell centered.
+	 * 
+	 * @param shell			The shell to center.
+	 * @return				The location where the shell is to be centered.
+	 */
+	private Point GetCenter(Shell shell)
+	{
+		// Get the rects for the display and the shell.
+	    Rectangle bounds = Display.getCurrent().getBounds();
+	    Rectangle rect = shell.getBounds();
+	    
+	    // Get the x and y position for the new location.
+	    int x = bounds.x + (bounds.width - rect.width) / 2;
+	    int y = bounds.y + (bounds.height - rect.height) / 2;
+	    
+	    // Return the new point.
+	    return new Point(x, y);
+	}
 
 	@Override
 	/**
@@ -205,7 +247,6 @@ public class MultiPassView implements java.util.Observer
 	 */
 	public void update(Observable o, Object arg)
 	{
-		System.out.println("In the update function.");
 		Question currentQuestion = (Question)arg;
 		
 		question.setText(currentQuestion.GetQuestion());
