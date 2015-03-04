@@ -57,24 +57,55 @@ public class MultiPassController implements SelectionListener
 	@Override
 	public void widgetSelected(SelectionEvent arg)
 	{
-		if(arg.getSource() == view.answerOne)
+		if(arg.getSource() == view.buttonA)
 		{
-			// Set the selected answer as answer one.
+			// Set all other buttons as not selected.
+			view.buttonB.setSelection(false);
+			view.buttonC.setSelection(false);
+			view.buttonD.setSelection(false);
 		}
-		else if(arg.getSource() == view.answerTwo)
+		else if(arg.getSource() == view.buttonB)
 		{
-			// Set the selected answer as answer two.
+			// Set all other buttons as not selected.
+			view.buttonA.setSelection(false);
+			view.buttonC.setSelection(false);
+			view.buttonD.setSelection(false);
 		}
-		else if(arg.getSource() == view.answerThree)
+		else if(arg.getSource() == view.buttonC)
 		{
-			// Set the selected answer as answer three.
+			// Set all other buttons as not selected.
+			view.buttonA.setSelection(false);
+			view.buttonB.setSelection(false);
+			view.buttonD.setSelection(false);
 		}
-		else if(arg.getSource() == view.answerFour)
+		else if(arg.getSource() == view.buttonD)
 		{
-			// Set the selected answer as answer four.
+			// Set all other buttons as not selected.
+			view.buttonA.setSelection(false);
+			view.buttonB.setSelection(false);
+			view.buttonC.setSelection(false);
 		}
 		else if(arg.getSource() == view.submit)
 		{
+			// Mark the selected answer as such.
+			if(view.buttonA.getSelection())
+			{
+				
+			}
+			else if(view.buttonB.getSelection())
+			{
+				
+			}
+			else if(view.buttonC.getSelection())
+			{
+				
+			}
+			else if(view.buttonD.getSelection())
+			{
+				
+			}
+			
+			// Move to the next question.
 			model.NextQuestion();
 		}
 	}
