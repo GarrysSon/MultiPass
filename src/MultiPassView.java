@@ -26,7 +26,7 @@ public class MultiPassView implements java.util.Observer
 	/**
 	 * The buttons for MultiPass.
 	 */
-	public Button buttonA, buttonB, buttonC, buttonD, submit;
+	public Button buttonA, buttonB, buttonC, buttonD, submit, moveOn;
 	
 	/**
 	 * The answers for MultiPass.
@@ -69,7 +69,7 @@ public class MultiPassView implements java.util.Observer
 		/*	Shell  */
 		final Shell shell = new Shell(display);
 		shell.setText("MultiPass");
-		shell.setMinimumSize(450, 250);
+		shell.setMinimumSize(450, 275);
 		shell.setLocation(GetCenter(shell));
 		shell.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_WHITE));
 		
@@ -108,22 +108,22 @@ public class MultiPassView implements java.util.Observer
 		// End button and answer composite.
 		
 		// Answer A.
-		buttonA = MultiPassButton(buttonsComposite, "A", 10, new GridData(SWT.DEFAULT, SWT.DEFAULT, false, true));
+		buttonA = AnswerButton(buttonsComposite, "A", 10, new GridData(SWT.DEFAULT, SWT.DEFAULT, false, true));
 		answerA = new Label(buttonsComposite, SWT.NONE);
 		answerA.setLayoutData(new GridData(SWT.DEFAULT, SWT.DEFAULT, false, false));
 		
 		// Answer B.
-		buttonB = MultiPassButton(buttonsComposite, "B", 10, new GridData(SWT.DEFAULT, SWT.DEFAULT, false, true));
+		buttonB = AnswerButton(buttonsComposite, "B", 10, new GridData(SWT.DEFAULT, SWT.DEFAULT, false, true));
 		answerB = new Label(buttonsComposite, SWT.NONE);
 		answerB.setLayoutData(new GridData(SWT.DEFAULT, SWT.DEFAULT, false, false));
 		
 		// Answer C.
-		buttonC = MultiPassButton(buttonsComposite, "C", 10, new GridData(SWT.DEFAULT, SWT.DEFAULT, false, true));
+		buttonC = AnswerButton(buttonsComposite, "C", 10, new GridData(SWT.DEFAULT, SWT.DEFAULT, false, true));
 		answerC = new Label(buttonsComposite, SWT.NONE);
 		answerC.setLayoutData(new GridData(SWT.DEFAULT, SWT.DEFAULT, false, false));
 		
 		// Answer D.
-		buttonD = MultiPassButton(buttonsComposite, "D", 10, new GridData(SWT.DEFAULT, SWT.DEFAULT, false, true));
+		buttonD = AnswerButton(buttonsComposite, "D", 10, new GridData(SWT.DEFAULT, SWT.DEFAULT, false, true));
 		answerD = new Label(buttonsComposite, SWT.NONE);
 		answerD.setLayoutData(new GridData(SWT.DEFAULT, SWT.DEFAULT, false, false));
 		
@@ -131,8 +131,26 @@ public class MultiPassView implements java.util.Observer
 		Label emptyEnd = CenterLabel(answerComposite);
 		/*	End of Answers.  */
 		
-		/*	Submit button.  */
-		submit = MultiPassButton(shell, "Submit", 50, new GridData(GridData.END, GridData.END, false, true));
+		/*	Submit and Continue.  */
+		// Making the save/continue composite.
+		Composite submitComposite = new Composite(shell, SWT.NONE);
+		GridLayout submitLayout = new GridLayout();
+		submitLayout.numColumns = 3;
+		submitLayout.makeColumnsEqualWidth = false;
+		
+		submitComposite.setLayout(submitLayout);
+		submitComposite.setLayoutData(new GridData(SWT.FILL, SWT.DEFAULT, true, false));
+		submitComposite.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_WHITE));
+		// End of save/continue composite.
+		
+		// Empty begin label to right align the buttons.
+		Label beginEmpty = CenterLabel(submitComposite);
+		
+		// Submit and Continue buttons.
+		submit = SubmitButton(submitComposite, "Submit", new GridData(GridData.END, GridData.END, false, false));
+		moveOn = SubmitButton(submitComposite, "Continue", new GridData(GridData.END, GridData.END, false, false));
+		moveOn.setEnabled(false);
+		/*	End of Submit and Continue  */
 		
 		shell.pack();
 		return shell;
@@ -170,7 +188,7 @@ public class MultiPassView implements java.util.Observer
 	}
 	
 	/**
-	 * Creates a generic MultiPass button.
+	 * Creates a MultiPass answer button.
 	 * 
 	 * @param composite			The composite associated with this button.
 	 * @param buttonText		The text for this button.
@@ -179,7 +197,7 @@ public class MultiPassView implements java.util.Observer
 	 * 
 	 * @return					The newly created button.
 	 */
-	private Button MultiPassButton(Composite composite, String buttonText, int horizontalIndent, GridData layout)
+	private Button AnswerButton(Composite composite, String buttonText, int horizontalIndent, GridData layout)
 	{
 		// Create the button.
 		Button button = new Button(composite, SWT.TOGGLE);
@@ -187,6 +205,25 @@ public class MultiPassView implements java.util.Observer
 		
 		// Set the buttons indent and layout.
 		layout.horizontalIndent = horizontalIndent;
+		button.setLayoutData(layout);
+		
+		return button;
+	}
+	
+	/**
+	 * Creates a MultiPass submit button.
+	 * 
+	 * @param composite			The composite associated with this button.
+	 * @param buttonText		The text for this button.
+	 * @param layout			The GridData layout associated with this button.
+	 * 
+	 * @return					The newly created button.
+	 */
+	private Button SubmitButton(Composite composite, String buttonText, GridData layout)
+	{
+		// Create the button and set its layout.
+		Button button = new Button(composite, SWT.PUSH);
+		button.setText(buttonText);
 		button.setLayoutData(layout);
 		
 		return button;
@@ -207,6 +244,7 @@ public class MultiPassView implements java.util.Observer
 		buttonC.addSelectionListener(controller);
 		buttonD.addSelectionListener(controller);
 		submit.addSelectionListener(controller);
+		moveOn.addSelectionListener(controller);
 	}
 	
 	/**

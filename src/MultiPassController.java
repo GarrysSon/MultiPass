@@ -105,8 +105,18 @@ public class MultiPassController implements SelectionListener
 				
 			}
 			
+			// Toggle the submit and continue buttons.
+			view.moveOn.setEnabled(true);
+			view.submit.setEnabled(false);
+		}
+		else if(arg.getSource() == view.moveOn)
+		{
 			// Move to the next question.
 			model.NextQuestion();
+			
+			// Toggle the submit and continue buttons.
+			view.moveOn.setEnabled(false);
+			view.submit.setEnabled(true);
 		}
 	}
 }
