@@ -110,15 +110,19 @@ public class MultiPassModel extends java.util.Observable
 				switch(answer)
 				{
 					case A:
+						currentQuestion.SetAChosen();
 						question.SetAChosen();
 						break;
 					case B:
+						currentQuestion.SetBChosen();
 						question.SetBChosen();
 						break;
 					case C:
+						currentQuestion.SetCChosen();
 						question.SetCChosen();
 						break;
 					case D:
+						currentQuestion.SetCChosen();
 						question.SetDChosen();
 						break;
 				}
