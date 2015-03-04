@@ -28,12 +28,23 @@ public class Question
 	private Answer[] answers;
 	
 	/**
+	 * Boolean to tell if the user has chosen an answer.
+	 */
+	public Boolean chose;
+	
+	/**
+	 * The chosen answer.
+	 */
+	public Choices choice;
+	
+	/**
 	 * Empty constructor.
 	 */
 	public Question()
 	{
 		answers = new Answer[MAX_ANSWERS];
 		question = "";
+		chose = false;
 	}
 	
 	/**
@@ -116,7 +127,9 @@ public class Question
 	 */
 	public void SetAChosen()
 	{
+		choice = Choices.A;
 		answers[0].SetChosen();
+		chose = true;
 	}
 	
 	/**
@@ -134,7 +147,9 @@ public class Question
 	 */
 	public void SetBChosen()
 	{
+		choice = Choices.B;
 		answers[1].SetChosen();
+		chose = true;
 	}
 	
 	/**
@@ -152,7 +167,9 @@ public class Question
 	 */
 	public void SetCChosen()
 	{
+		choice = Choices.C;
 		answers[2].SetChosen();
+		chose = true;
 	}
 	
 	/**
@@ -170,7 +187,9 @@ public class Question
 	 */
 	public void SetDChosen()
 	{
+		choice = Choices.D;
 		answers[3].SetChosen();
+		chose = true;
 	}
 	
 }

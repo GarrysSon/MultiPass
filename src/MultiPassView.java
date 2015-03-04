@@ -230,6 +230,24 @@ public class MultiPassView implements java.util.Observer
 	}
 	
 	/**
+	 * Resets the buttons to their default visual states.
+	 */
+	public void ResetUI()
+	{
+		answerA.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_WHITE));
+		buttonA.setSelection(false);
+		
+		answerB.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_WHITE));
+		buttonB.setSelection(false);
+		
+		answerC.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_WHITE));
+		buttonC.setSelection(false);
+		
+		answerD.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_WHITE));
+		buttonD.setSelection(false);
+	}
+	
+	/**
 	 * Adds the controller to this view.
 	 * 
 	 * @param tempcontroller	The MultiPass controller.
@@ -287,20 +305,63 @@ public class MultiPassView implements java.util.Observer
 	{
 		Question currentQuestion = (Question)arg;
 		
-		question.setText(currentQuestion.GetQuestion());
-		question.getParent().layout();
-		
-		answerA.setText(currentQuestion.GetAnswerA());
-		answerA.getParent().layout();
-		
-		answerB.setText(currentQuestion.GetAnswerB());
-		answerB.getParent().layout();
-		
-		answerC.setText(currentQuestion.GetAnswerC());
-		answerC.getParent().layout();
-		
-		answerD.setText(currentQuestion.GetAnswerD());
-		answerD.getParent().layout();
+		// Test if the user has selected an answer.
+		if(currentQuestion.chose)
+		{
+			// Set the chosen button as wrong.
+			switch(currentQuestion.choice)
+			{
+				case A:
+					answerA.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_RED));
+					break;
+				case B:
+					answerB.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_RED));
+					break;
+				case C:
+					answerC.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_RED));
+					break;
+				case D:
+					answerD.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_RED));
+					break;
+			}
+			
+			Answer[] answers = currentQuestion.GetAllAnswers();
+			
+			// Set the correct answer as right.
+			if(answers[0].IsCorrect())
+			{
+				answerA.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_GREEN));
+			}
+			else if(answers[1].IsCorrect())
+			{
+				answerB.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_GREEN));
+			}
+			else if(answers[2].IsCorrect())
+			{
+				answerC.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_GREEN));
+			}
+			else if(answers[3].IsCorrect())
+			{
+				answerD.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_GREEN));
+			}
+		}
+		else
+		{
+			question.setText(currentQuestion.GetQuestion());
+			question.getParent().layout();
+			
+			answerA.setText(currentQuestion.GetAnswerA());
+			answerA.getParent().layout();
+			
+			answerB.setText(currentQuestion.GetAnswerB());
+			answerB.getParent().layout();
+			
+			answerC.setText(currentQuestion.GetAnswerC());
+			answerC.getParent().layout();
+			
+			answerD.setText(currentQuestion.GetAnswerD());
+			answerD.getParent().layout();
+		}
 		
 		shell.pack();
 	}

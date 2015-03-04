@@ -127,6 +127,9 @@ public class MultiPassModel extends java.util.Observable
 						break;
 				}
 				
+				setChanged();
+				notifyObservers(currentQuestion);
+				
 				break normal;
 			}
 		}

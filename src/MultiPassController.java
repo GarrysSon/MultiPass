@@ -1,4 +1,3 @@
-import java.awt.Choice;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 
@@ -118,6 +117,9 @@ public class MultiPassController implements SelectionListener
 			// Toggle the submit and continue buttons.
 			view.moveOn.setEnabled(false);
 			view.submit.setEnabled(true);
+			
+			// Reset the button states.
+			view.ResetUI();
 		}
 	}
 }
