@@ -112,6 +112,14 @@ public class Question
 	}
 	
 	/**
+	 * Sets answer A as chosen.
+	 */
+	public void SetAChosen()
+	{
+		answers[0].SetChosen();
+	}
+	
+	/**
 	 * Gets answer B for this Question.
 	 * 
 	 * @return		The answer B.
@@ -119,6 +127,14 @@ public class Question
 	public String GetAnswerB()
 	{
 		return answers[1].answer;
+	}
+	
+	/**
+	 * Sets answer B as chosen.
+	 */
+	public void SetBChosen()
+	{
+		answers[1].SetChosen();
 	}
 	
 	/**
@@ -132,6 +148,14 @@ public class Question
 	}
 	
 	/**
+	 * Sets answer C as chosen.
+	 */
+	public void SetCChosen()
+	{
+		answers[2].SetChosen();
+	}
+	
+	/**
 	 * Gets answer D for this Question.
 	 * 
 	 * @return		The answer D.
@@ -139,6 +163,14 @@ public class Question
 	public String GetAnswerD()
 	{
 		return answers[3].answer;
+	}
+	
+	/**
+	 * Sets answer D as chosen.
+	 */
+	public void SetDChosen()
+	{
+		answers[3].SetChosen();
 	}
 	
 }

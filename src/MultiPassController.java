@@ -1,3 +1,4 @@
+import java.awt.Choice;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 
@@ -90,19 +91,19 @@ public class MultiPassController implements SelectionListener
 			// Mark the selected answer as such.
 			if(view.buttonA.getSelection())
 			{
-				
+				model.SetSelected(Choices.A);
 			}
 			else if(view.buttonB.getSelection())
 			{
-				
+				model.SetSelected(Choices.B);
 			}
 			else if(view.buttonC.getSelection())
 			{
-				
+				model.SetSelected(Choices.C);
 			}
 			else if(view.buttonD.getSelection())
 			{
-				
+				model.SetSelected(Choices.D);
 			}
 			
 			// Toggle the submit and continue buttons.

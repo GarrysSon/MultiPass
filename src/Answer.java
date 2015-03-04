@@ -15,6 +15,13 @@ public class Answer
 	private char correct;
 	
 	/**
+	 * Tells if the answer was chosen.
+	 * 0 : Not chosen
+	 * 1 : Chosen
+	 */
+	private char chosen;
+	
+	/**
 	 * The answer associated with this Answer.
 	 */
 	public String answer;
@@ -34,8 +41,6 @@ public class Answer
 	{
 		this.correct = 0;
 	}
-	
-	private char chosen = '0';
 	
 	/**
 	 * Sets this answer to be the chosen answer.
@@ -71,6 +76,7 @@ public class Answer
 	public Answer()
 	{
 		correct = '0';
+		chosen = '0';
 		answer = "";
 	}
 	

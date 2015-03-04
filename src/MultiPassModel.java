@@ -96,4 +96,35 @@ public class MultiPassModel extends java.util.Observable
 			System.out.println("Finished the quiz!");
 		}
 	}
+	
+	public void SetSelected(Choices answer)
+	{
+		// For loop to iterate over the questions.
+		normal :
+		for(Question question : questions)
+		{
+			// Test if the question is the current question.
+			if(currentQuestion.equals(question))
+			{
+				// Set the selected answer as such.
+				switch(answer)
+				{
+					case A:
+						question.SetAChosen();
+						break;
+					case B:
+						question.SetBChosen();
+						break;
+					case C:
+						question.SetCChosen();
+						break;
+					case D:
+						question.SetDChosen();
+						break;
+				}
+				
+				break normal;
+			}
+		}
+	}
 }
