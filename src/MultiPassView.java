@@ -4,6 +4,7 @@ import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.*;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.FileDialog;
@@ -205,16 +206,40 @@ public class MultiPassView implements java.util.Observer
 		questionData.exclude = !questionData.exclude;
 		questionComposite.setVisible(!questionData.exclude);
 		questionComposite.getParent().pack();
-		
-		// Hide the answers.
-		answerData.exclude = !answerData.exclude;
-        answerComposite.setVisible(!answerData.exclude);
-        answerComposite.getParent().pack();
         
         // Hide the submit/continue buttons.
         submitData.exclude = !submitData.exclude;
         submitComposite.setVisible(!submitData.exclude);
         submitComposite.getParent().pack();
+        
+        for(Control control : answerComposite.getChildren())
+        {
+        	control.dispose();
+        }
+      		
+        /*	Results  */
+        // Empty begin label to center the results.
+ 		Label emptBegin = CenterLabel(answerComposite);
+ 		
+ 		// Center composite for results label.
+ 		Composite resultsComposite = new Composite(answerComposite, SWT.NONE);
+ 		GridLayout resultLayout = new GridLayout();
+ 		resultLayout.numColumns = 1;
+ 		resultLayout.makeColumnsEqualWidth = false;
+ 		
+ 		resultsComposite.setLayout(resultLayout);
+ 		resultsComposite.setLayoutData(new GridData(SWT.DEFAULT, SWT.DEFAULT, false, true));
+ 		resultsComposite.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_WHITE));
+ 		
+ 		// The label for the results.
+ 		Label results = new Label(resultsComposite, SWT.NONE);
+ 		results.setText("You suck ass!");
+ 		results.setLayoutData(new GridData(SWT.DEFAULT, SWT.DEFAULT, false, false));
+ 		
+ 		// Empty end label to center the results.
+ 		Label emptEnd = CenterLabel(answerComposite);
+ 		answerComposite.layout();
+		/*	End of Results  */
 	}
 	
 	/**
@@ -296,24 +321,38 @@ public class MultiPassView implements java.util.Observer
 	public void ResetUI()
 	{
 		// Reset answer A button and text.
-		answerA.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_WHITE));
-		buttonA.setSelection(false);
-		buttonA.setEnabled(true);
+		if(!answerA.isDisposed() && !buttonA.isDisposed())
+		{
+			answerA.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_WHITE));
+			buttonA.setSelection(false);
+			buttonA.setEnabled(true);
+		}
 		
 		// Reset answer B button and text.
-		answerB.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_WHITE));
-		buttonB.setSelection(false);
-		buttonB.setEnabled(true);
+		if(!answerB.isDisposed() && !buttonB.isDisposed())
+		{
+			answerB.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_WHITE));
+			buttonB.setSelection(false);
+			buttonB.setEnabled(true);
+		}
 		
 		// Reset answer C button and text.
-		answerC.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_WHITE));
-		buttonC.setSelection(false);
-		buttonC.setEnabled(true);
+		if(!answerC.isDisposed() && !buttonC.isDisposed())
+		{
+			answerC.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_WHITE));
+			buttonC.setSelection(false);
+			buttonC.setEnabled(true);
+		}
 		
 		// Reset answer D button and text.
-		answerD.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_WHITE));
-		buttonD.setSelection(false);
-		buttonD.setEnabled(true);
+		if(!answerD.isDisposed() && !buttonD.isDisposed())
+		{
+			answerD.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_WHITE));
+			buttonD.setSelection(false);
+			buttonD.setEnabled(true);
+		}
+		
+		shell.layout(true, true);
 	}
 	
 	/**
