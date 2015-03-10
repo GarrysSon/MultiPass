@@ -125,11 +125,13 @@ public class Question
 	/**
 	 * Sets answer A as chosen.
 	 */
-	public void SetAChosen()
+	public Boolean SetAChosen()
 	{
 		choice = Choices.A;
 		answers[0].SetChosen();
 		chose = true;
+		
+		return answers[0].IsCorrect();
 	}
 	
 	/**
@@ -145,11 +147,13 @@ public class Question
 	/**
 	 * Sets answer B as chosen.
 	 */
-	public void SetBChosen()
+	public Boolean SetBChosen()
 	{
 		choice = Choices.B;
 		answers[1].SetChosen();
 		chose = true;
+		
+		return answers[1].IsCorrect();
 	}
 	
 	/**
@@ -165,11 +169,13 @@ public class Question
 	/**
 	 * Sets answer C as chosen.
 	 */
-	public void SetCChosen()
+	public Boolean SetCChosen()
 	{
 		choice = Choices.C;
 		answers[2].SetChosen();
 		chose = true;
+		
+		return answers[2].IsCorrect();
 	}
 	
 	/**
@@ -185,11 +191,13 @@ public class Question
 	/**
 	 * Sets answer D as chosen.
 	 */
-	public void SetDChosen()
+	public Boolean SetDChosen()
 	{
 		choice = Choices.D;
 		answers[3].SetChosen();
 		chose = true;
+		
+		return answers[3].IsCorrect();
 	}
 	
 }

@@ -200,7 +200,7 @@ public class MultiPassView implements java.util.Observer
 	/**
 	 * Shows the results of the quiz.
 	 */
-	private void ShowResults()
+	private void ShowResults(float result)
 	{
 		// Hide the question.
 		questionData.exclude = !questionData.exclude;
@@ -232,9 +232,9 @@ public class MultiPassView implements java.util.Observer
  		resultsComposite.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_WHITE));
  		
  		// The label for the results.
- 		Label results = new Label(resultsComposite, SWT.NONE);
- 		results.setText("You suck ass!");
- 		results.setLayoutData(new GridData(SWT.DEFAULT, SWT.DEFAULT, false, false));
+ 		Label resultsLabel = new Label(resultsComposite, SWT.NONE);
+ 		resultsLabel.setText(String.format("Results: %3.2f%%", result));
+ 		resultsLabel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
  		
  		// Empty end label to center the results.
  		Label emptEnd = CenterLabel(answerComposite);
@@ -412,7 +412,7 @@ public class MultiPassView implements java.util.Observer
 	public void update(Observable o, Object arg)
 	{
 		
-		if(arg != null)
+		if(arg instanceof Question)
 		{
 			Question currentQuestion = (Question)arg;
 			
@@ -476,9 +476,9 @@ public class MultiPassView implements java.util.Observer
 			
 			shell.pack();
 		}
-		else
+		else if(arg instanceof Float)
 		{
-			ShowResults();
+			ShowResults((float)arg);
 		}
 	}
 }

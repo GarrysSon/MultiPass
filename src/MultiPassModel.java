@@ -12,6 +12,16 @@ public class MultiPassModel extends java.util.Observable
 	private int index;
 	
 	/**
+	 * The total number of correctly answered questions.
+	 */
+	private int numCorrect;
+	
+	/**
+	 * The total number of questions.
+	 */
+	private int totalQuestions;
+	
+	/**
 	 * The list of questions.
 	 */
 	public ArrayList<Question> questions;
@@ -27,6 +37,8 @@ public class MultiPassModel extends java.util.Observable
 	public MultiPassModel()
 	{
 		index = 0;
+		numCorrect = 0;
+		totalQuestions = 0;
 		questions = new ArrayList<Question>();
 		currentQuestion = new Question();
 	}
@@ -73,6 +85,7 @@ public class MultiPassModel extends java.util.Observable
 	        
 	        // Add the question to the list of questions and then read in the empty line.
 	        questions.add(tempQuest);
+	        totalQuestions++;
 	        line = reader.readLine();
 	    }
 	    
@@ -98,7 +111,7 @@ public class MultiPassModel extends java.util.Observable
 			// Notify the observer that the quiz is finished.
 			System.out.println("Finished the quiz!");
 			setChanged();
-			notifyObservers();
+			notifyObservers(((float)numCorrect / totalQuestions) * 100);
 		}
 	}
 	
@@ -116,19 +129,35 @@ public class MultiPassModel extends java.util.Observable
 				{
 					case A:
 						currentQuestion.SetAChosen();
-						question.SetAChosen();
+						
+						if(question.SetAChosen())
+						{
+							numCorrect++;
+						}
 						break;
 					case B:
 						currentQuestion.SetBChosen();
-						question.SetBChosen();
+						
+						if(question.SetBChosen())
+						{
+							numCorrect++;
+						}
 						break;
 					case C:
 						currentQuestion.SetCChosen();
-						question.SetCChosen();
+						
+						if(question.SetCChosen())
+						{
+							numCorrect++;
+						}
 						break;
 					case D:
 						currentQuestion.SetCChosen();
-						question.SetDChosen();
+						
+						if(question.SetDChosen())
+						{
+							numCorrect++;
+						}
 						break;
 				}
 				
