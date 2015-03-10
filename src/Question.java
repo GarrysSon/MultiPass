@@ -1,3 +1,6 @@
+import java.util.Collections;
+import java.util.Random;
+
 
 /**
  * Class to represent an answer in the MultiPass application.
@@ -80,6 +83,23 @@ public class Question
 		{
 			System.out.println("You are trying to add an answer to a question that already has 4! Stop it you jerk!");
 		}
+	}
+	
+	/**
+	 * Shuffles the answers for this question using the Fisher-Yates method.
+	 */
+	public void ShuffleAnswers()
+	{
+		Random rnd = new Random();
+		
+	    for (int i = answers.length - 1; i > 0; i--)
+	    {
+	      int index = rnd.nextInt(i + 1);
+	      
+	      Answer a = answers[index];
+	      answers[index] = answers[i];
+	      answers[i] = a;
+	    }
 	}
 	
 	/**

@@ -3,6 +3,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class MultiPassModel extends java.util.Observable
 {
@@ -83,11 +84,16 @@ public class MultiPassModel extends java.util.Observable
 	        	tempQuest.AddAnswer(tempAns);
 	        }
 	        
+	        // Randomizing the answers.
+	        tempQuest.ShuffleAnswers();
+	        
 	        // Add the question to the list of questions and then read in the empty line.
 	        questions.add(tempQuest);
 	        totalQuestions++;
 	        line = reader.readLine();
 	    }
+	    
+	    Collections.shuffle(questions);
 	    
 	    // Setting the initial question.
 	    NextQuestion();
