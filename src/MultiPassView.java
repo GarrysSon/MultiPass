@@ -6,11 +6,8 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Listener;
-import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Shell;
 import java.util.Observable;
 
@@ -133,6 +130,7 @@ public class MultiPassView implements java.util.Observer
 		// End answer area composite.
 		
 		// Empty beginning label to center the buttons.
+		@SuppressWarnings("unused")
 		Label emptyBegin = CenterLabel(answerComposite);
 		
 		// Making the composite for all the buttons and answers.
@@ -166,6 +164,7 @@ public class MultiPassView implements java.util.Observer
 		answerD.setLayoutData(new GridData(SWT.DEFAULT, SWT.DEFAULT, false, false));
 		
 		// Empty end label to center the buttons.
+		@SuppressWarnings("unused")
 		Label emptyEnd = CenterLabel(answerComposite);
 		/*	End of Answers.  */
 		
@@ -184,6 +183,7 @@ public class MultiPassView implements java.util.Observer
 		// End of save/continue composite.
 		
 		// Empty begin label to right align the buttons.
+		@SuppressWarnings("unused")
 		Label beginEmpty = CenterLabel(submitComposite);
 		
 		// Submit and Continue buttons.
@@ -219,6 +219,7 @@ public class MultiPassView implements java.util.Observer
       		
         /*	Results  */
         // Empty begin label to center the results.
+        @SuppressWarnings("unused")
  		Label emptBegin = CenterLabel(answerComposite);
  		
  		// Center composite for results label.
@@ -237,6 +238,7 @@ public class MultiPassView implements java.util.Observer
  		resultsLabel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
  		
  		// Empty end label to center the results.
+ 		@SuppressWarnings("unused")
  		Label emptEnd = CenterLabel(answerComposite);
  		answerComposite.layout();
 		/*	End of Results  */
@@ -411,7 +413,7 @@ public class MultiPassView implements java.util.Observer
 	 */
 	public void update(Observable o, Object arg)
 	{
-		
+		// Test if the passed object is a question.
 		if(arg instanceof Question)
 		{
 			Question currentQuestion = (Question)arg;
@@ -476,6 +478,7 @@ public class MultiPassView implements java.util.Observer
 			
 			shell.pack();
 		}
+		// Test if the passed object is a float.
 		else if(arg instanceof Float)
 		{
 			ShowResults((float)arg);

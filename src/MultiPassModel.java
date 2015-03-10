@@ -93,6 +93,7 @@ public class MultiPassModel extends java.util.Observable
 	        line = reader.readLine();
 	    }
 	    
+	    // Randomizing the questions.
 	    Collections.shuffle(questions);
 	    
 	    // Setting the initial question.
@@ -121,6 +122,11 @@ public class MultiPassModel extends java.util.Observable
 		}
 	}
 	
+	/**
+	 * Set the selected answer as such.
+	 * 
+	 * @param answer		The selected answer.
+	 */
 	public void SetSelected(Choices answer)
 	{
 		// For loop to iterate over the questions.
@@ -130,7 +136,7 @@ public class MultiPassModel extends java.util.Observable
 			// Test if the question is the current question.
 			if(currentQuestion.equals(question))
 			{
-				// Set the selected answer as such.
+				// Set the the selected answer.
 				switch(answer)
 				{
 					case A:
@@ -167,9 +173,9 @@ public class MultiPassModel extends java.util.Observable
 						break;
 				}
 				
+				// Alert the view to the changes and exit the loop.
 				setChanged();
 				notifyObservers(currentQuestion);
-				
 				break normal;
 			}
 		}

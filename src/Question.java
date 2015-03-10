@@ -1,6 +1,4 @@
-import java.util.Collections;
 import java.util.Random;
-
 
 /**
  * Class to represent an answer in the MultiPass application.
@@ -144,6 +142,8 @@ public class Question
 	
 	/**
 	 * Sets answer A as chosen.
+	 * 
+	 * @return		Whether the chosen answer was correct.
 	 */
 	public Boolean SetAChosen()
 	{
@@ -166,6 +166,8 @@ public class Question
 	
 	/**
 	 * Sets answer B as chosen.
+	 * 
+	 * @return		Whether the chosen answer was correct.
 	 */
 	public Boolean SetBChosen()
 	{
@@ -188,6 +190,8 @@ public class Question
 	
 	/**
 	 * Sets answer C as chosen.
+	 * 
+	 * @return		Whether the chosen answer was correct.
 	 */
 	public Boolean SetCChosen()
 	{
@@ -210,6 +214,8 @@ public class Question
 	
 	/**
 	 * Sets answer D as chosen.
+	 * 
+	 * @return		Whether the chosen answer was correct.
 	 */
 	public Boolean SetDChosen()
 	{
